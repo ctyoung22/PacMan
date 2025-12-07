@@ -12,7 +12,7 @@ public class GameConstants {
 
     // Character speeds
     public static final int GHOST_SPEED = 1;
-    public static final int PACMAN_SPEED = 2;
+    public static final int PACMAN_SPEED = 1;
 
     // Timing constants
     public static final int GHOST_AI_DELAY = 300; // milliseconds
@@ -21,6 +21,7 @@ public class GameConstants {
 
     //tunnel 
     public static final int TUNNEL_ROW = 9;
+    public static final int SPAWN_ROW = 9;
     //public static final int INITIAL_LIVES = 3;
     //public static final int FRUIT_SPAWN_SCORE = 100;
     

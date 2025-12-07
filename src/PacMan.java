@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 
 public class PacMan extends Character {
     private Circle shape;
-    private int speed = 2; // movement speed
+    private int speed = GameConstants.PACMAN_SPEED; // movement speed
     private char direction = 'R'; // current direction
     private char nextDirection = ' '; // queued direction
 

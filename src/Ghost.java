@@ -1,5 +1,4 @@
 
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -10,11 +9,14 @@ import java.util.List;
 
 public abstract class Ghost extends Character {
     private Circle shape;
-    protected boolean aiActive = false; // starts with random movement first 
+    protected boolean aiActive = false; // starts with random movement first
     protected int aiDelay = GameConstants.GHOST_AI_DELAY; // delay before AI activates
     private int ghostSpeed = GameConstants.GHOST_SPEED; // movement speed
 
-    protected enum Mode { SCATTER, CHASE, FRIGHTENED, EYES } // Ghost modes
+    protected enum Mode {
+        SCATTER, CHASE, FRIGHTENED, EYES
+    } // Ghost modes
+
     protected Mode currentMode = Mode.SCATTER; // starting mode
     protected long modeTimer = System.currentTimeMillis(); // timer for mode switching
 
@@ -26,11 +28,9 @@ public abstract class Ghost extends Character {
     protected double frameTimer = 0.0;
     protected ImageView spriteView; // for rendering the sprite
 
-  
-
-    public Ghost(int x, int y, int size,int screenWidth, int screenHeight, Color color) {
-        super(x, y, size,  screenWidth,  screenHeight);
-        shape = new Circle(x + size/2, y + size/2, size/2, color);
+    public Ghost(int x, int y, int size, int screenWidth, int screenHeight, Color color) {
+        super(x, y, size, screenWidth, screenHeight);
+        shape = new Circle(x + size / 2, y + size / 2, size / 2, color);
 
         spriteView = new ImageView();
         spriteView.setFitWidth(size);
@@ -43,31 +43,31 @@ public abstract class Ghost extends Character {
 
     // get the shape for rendering
     @Override
-    public Circle getShape() { return shape; }
+    public Circle getShape() {
+        return shape;
+    }
 
     // Each ghost will override this with its own AI
     public abstract void updateAI(PacMan pacman, GameMap map);
 
     public void setVelocity(int vx, int vy) {
-         this.velocityX = vx;
-         this.velocityY = vy;
- }
- 
+        this.velocityX = vx;
+        this.velocityY = vy;
+    }
 
     protected void updateMode() { // switch between SCATTER and CHASE modes
-    long elapsed = System.currentTimeMillis() - modeTimer;
-    if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
-        currentMode = Mode.CHASE;
-        modeTimer = System.currentTimeMillis();
-    } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
-        currentMode = Mode.SCATTER;
-        modeTimer = System.currentTimeMillis();
+        long elapsed = System.currentTimeMillis() - modeTimer;
+        if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
+            currentMode = Mode.CHASE;
+            modeTimer = System.currentTimeMillis();
+        } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
+            currentMode = Mode.SCATTER;
+            modeTimer = System.currentTimeMillis();
+        }
     }
-}
-
 
     // standard movement with collision detection
-    @Override 
+    @Override
     public void move(GameMap map) {
         int nextX = x + velocityX;
         int nextY = y + velocityY;
@@ -84,12 +84,11 @@ public abstract class Ghost extends Character {
 
         spriteView.setX(x);
         spriteView.setY(y);
+
     }
 
-
-
-        // Move ghost toward a target tile (targetX, targetY)
-        protected void moveToward(int targetX, int targetY, GameMap map) {
+    // Move ghost toward a target tile (targetX, targetY)
+    protected void moveToward(int targetX, int targetY, GameMap map) {
         int[][] directions = getDirections(ghostSpeed);
 
         int bestVX = velocityX;
@@ -101,7 +100,21 @@ public abstract class Ghost extends Character {
             int nextX = x + testVX, nextY = y + testVY;
 
             if (!isBlocked(nextX, nextY, map)) {
+                // Normal distance
                 double distance = Math.abs(targetX - nextX) + Math.abs(targetY - nextY);
+
+                // Tunnel wrap distance check
+                if (nextY == GameConstants.TUNNEL_ROW * size) { // if ghost is on tunnel row
+                    // Force wrappedX to opposite edge depending on which side ghost is on
+                    int wrappedX = (nextX < screenWidth / 2) ? screenWidth - size : 0;
+
+                    // Distance if ghost were to wrap through tunnel
+                    double wrappedDistance = Math.abs(targetX - wrappedX) + Math.abs(targetY - nextY);
+
+                    distance = Math.min(distance, wrappedDistance); // compare normal distance to wrapped distance to
+                                                                    // see whats better/shorter
+                }
+
                 if (distance < bestDistance) {
                     bestDistance = distance;
                     bestVX = testVX;
@@ -111,9 +124,8 @@ public abstract class Ghost extends Character {
         }
 
         setVelocity(bestVX, bestVY);
+
     }
-
-
 
     public void moveRandom(GameMap map) {
         boolean atIntersection = (x % size == 0) && (y % size == 0);
@@ -138,10 +150,8 @@ public abstract class Ghost extends Character {
         spriteView.setY(y);
     }
 
-
-
     // Random direction picker
-    private void pickRandomDirection(GameMap map) {
+    protected void pickRandomDirection(GameMap map) {
         int currentVX = velocityX;
         int currentVY = velocityY;
 
@@ -150,7 +160,8 @@ public abstract class Ghost extends Character {
         List<int[]> validDirs = new ArrayList<>();
 
         for (int[] dir : directions) {
-            if (dir[0] == -currentVX && dir[1] == -currentVY) continue;
+            if (dir[0] == -currentVX && dir[1] == -currentVY)
+                continue;
             int nextX = x + dir[0], nextY = y + dir[1];
             if (!isBlocked(nextX, nextY, map)) {
                 validDirs.add(dir);
@@ -158,7 +169,7 @@ public abstract class Ghost extends Character {
         }
 
         if (!validDirs.isEmpty()) {
-            int[] chosen = validDirs.get((int)(Math.random() * validDirs.size()));
+            int[] chosen = validDirs.get((int) (Math.random() * validDirs.size()));
             setVelocity(chosen[0], chosen[1]);
         } else {
             // fallback: reverse if boxed in
@@ -166,17 +177,17 @@ public abstract class Ghost extends Character {
         }
     }
 
-    public ImageView getSprite(){
+    public ImageView getSprite() {
         return spriteView;
     }
 
-    public void updateAnimation(double time){
-        if (frames == null || frames.length == 0){
+    public void updateAnimation(double time) {
+        if (frames == null || frames.length == 0) {
             return;
         }
 
         frameTimer += time;
-        if(frameTimer >= frameTime){
+        if (frameTimer >= frameTime) {
             frameTimer -= frameTime;
             currentFrame = (currentFrame + 1) % frames.length;
 
@@ -186,10 +197,28 @@ public abstract class Ghost extends Character {
 
     }
 
+    public boolean released = false; // has the ghost been released from the ghost house
+
+    public void release() { // release the ghost
+        released = true;
+    }
+
+    public boolean isReleased() { // check if ghost is released
+        return released;
+    }
+
+    protected boolean hasExited = false; // has the ghost exited the ghost house
+
+    public boolean hasExited() { // check if ghost has exited the ghost house
+        return hasExited;
+    }
+
+    public void setExited(boolean exited) { // set exited status
+        this.hasExited = exited;
+    }
+
+    public Ghost.Mode getCurrentMode() { // returns current mode of ghost
+        return currentMode;
+    }
 
 }
-
-
-
-
-
