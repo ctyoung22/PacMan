@@ -1,5 +1,8 @@
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.image.Image;
 //import map.GameMap;
 
 public class Blinky extends Ghost {
@@ -8,6 +11,13 @@ public class Blinky extends Ghost {
 
     public Blinky(int x, int y, int screenWidth, int screenHeight, int size) {
         super(x, y, size, screenWidth, screenHeight, Color.RED);
+        
+        frames = new Image[]{
+            new Image(getClass().getResource("/Spr_Assets/Ghosts/Blinky/Red_Ghost_Spr1.png").toExternalForm()),
+            new Image(getClass().getResource("/Spr_Assets/Ghosts/Blinky/Red_Ghost_Spr2.png").toExternalForm()),
+            new Image(getClass().getResource("/Spr_Assets/Ghosts/Blinky/Red_Ghost_Spr3.png").toExternalForm())
+        };
+        spriteView.setImage(frames[0]);
     }
 
     @Override
@@ -30,7 +40,5 @@ public class Blinky extends Ghost {
             }
         }
     }
-
-
 
 }

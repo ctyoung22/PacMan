@@ -1,6 +1,9 @@
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +18,26 @@ public abstract class Ghost extends Character {
     protected Mode currentMode = Mode.SCATTER; // starting mode
     protected long modeTimer = System.currentTimeMillis(); // timer for mode switching
 
+    // For Animation frames
+    protected Image[] frames;
+    protected int currentFrame = 0;
+    // for Animation timing
+    protected double frameTime = 0.15; // seconds between frames
+    protected double frameTimer = 0.0;
+    protected ImageView spriteView; // for rendering the sprite
 
   
 
     public Ghost(int x, int y, int size,int screenWidth, int screenHeight, Color color) {
         super(x, y, size,  screenWidth,  screenHeight);
         shape = new Circle(x + size/2, y + size/2, size/2, color);
+
+        spriteView = new ImageView();
+        spriteView.setFitWidth(size);
+        spriteView.setFitHeight(size);
+        spriteView.setX(x);
+        spriteView.setY(y);
+
         setVelocity(ghostSpeed, 0);
     }
 
@@ -64,6 +81,9 @@ public abstract class Ghost extends Character {
 
         applyTunnelWrap(GameConstants.TUNNEL_ROW * size);
         updateShape(shape);
+
+        spriteView.setX(x);
+        spriteView.setY(y);
     }
 
 
@@ -113,6 +133,9 @@ public abstract class Ghost extends Character {
 
         applyTunnelWrap(9 * size);
         updateShape(shape);
+
+        spriteView.setX(x);
+        spriteView.setY(y);
     }
 
 
@@ -140,6 +163,24 @@ public abstract class Ghost extends Character {
         } else {
             // fallback: reverse if boxed in
             setVelocity(-currentVX, -currentVY);
+        }
+    }
+
+    public ImageView getSprite(){
+        return spriteView;
+    }
+
+    public void updateAnimation(double time){
+        if (frames == null || frames.length == 0){
+            return;
+        }
+
+        frameTime += time;
+        if(frameTimer >= frameTime){
+            frameTimer -= frameTime;
+            currentFrame = (currentFrame + 1) % frames.length;
+
+            spriteView.setImage(frames[currentFrame]);
         }
     }
 

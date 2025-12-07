@@ -39,10 +39,19 @@ public class PacController {
         scene.setOnKeyPressed(e -> pacman.handleInput(e.getCode())); // handle input
 
         gameLoop = new AnimationTimer() { // main game loop
+            private long lastTime = 0;
+
             @Override
             public void handle(long now) { // called every frame
+                if(lastTime == 0){
+                    lastTime = now;
+                    return;
+                }
+
+                double time = (now - lastTime) / 1_000_000_000.0;
+                lastTime = now;
                 pacman.move(gameMap); // update Pac
-                ghostManager.update(pacman, gameMap); // update Ghosts
+                ghostManager.update(pacman, gameMap, time); // update Ghosts
             }
         };
         gameLoop.start();

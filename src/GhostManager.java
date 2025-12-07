@@ -26,18 +26,19 @@ public class GhostManager {
 
     }
     // Update all ghosts
-    public void update(PacMan pacman, GameMap map) {
+    public void update(PacMan pacman, GameMap map, double time) {
         for (Ghost g : ghosts) {
             g.moveRandom(map);
             g.updateAI(pacman, map);
-           // g.move(map);
+            g.updateAnimation(time);
+            //g.move(map);
         }
     }
 
     // Get shapes of all ghosts for rendering
     public List<Node> getGhostShapes() {
         List<Node> nodes = new ArrayList<>();
-        for (Ghost g : ghosts) nodes.add(g.getShape());
+        for (Ghost g : ghosts) nodes.add(g.getSprite());
         return nodes;
     }
 }
