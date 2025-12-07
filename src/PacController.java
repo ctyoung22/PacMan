@@ -5,6 +5,8 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class PacController {
@@ -18,7 +20,8 @@ public class PacController {
     private GameMap gameMap;
     private PacMan pacman;
     private GhostManager ghostManager;
-      
+    
+    private ImageView mazeView;
 
     private AnimationTimer gameLoop;
 
@@ -28,9 +31,10 @@ public class PacController {
         // spawn positions (not hard-coded in map)
         pacman = new PacMan(9 * tileSize, 15 * tileSize, tileSize, boardWidth, boardHeight); // create Pac
         ghostManager = new GhostManager(tileSize);
-
+        createMapImage();
         root.getChildren().add(gameMap.getMapGroup());
-        root.getChildren().add(pacman.getShape());
+        root.getChildren().add(mazeView);
+        root.getChildren().add(pacman.getPacSprite());
         root.getChildren().addAll(ghostManager.getGhostShapes());
     }
 
@@ -48,13 +52,26 @@ public class PacController {
                     return;
                 }
 
-                double time = (now - lastTime) / 1_000_000_000.0;
+                double time = (now - lastTime) / 1_000_000_000.0; // nanoseconds to seconds
                 lastTime = now;
+
                 pacman.move(gameMap); // update Pac
+                pacman.updateAnimation(time);
                 ghostManager.update(pacman, gameMap, time); // update Ghosts
             }
         };
         gameLoop.start();
+    }
+
+    private void createMapImage(){
+        Image mazeImage = new Image(getClass().getResource("/Spr_Assets/Maze/Pacman_Map.png").toExternalForm());
+        mazeView = new ImageView(mazeImage);
+        mazeView.setX(0);
+        mazeView.setY(0);
+
+        mazeView.setFitWidth(boardWidth);
+        mazeView.setFitHeight(boardHeight);
+        mazeView.setPreserveRatio(true);
     }
 
     public Group getRoot() { return root; } // for Scene

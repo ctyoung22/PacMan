@@ -17,7 +17,7 @@ public class Blinky extends Ghost {
             new Image(getClass().getResource("/Spr_Assets/Ghosts/Blinky/Red_Ghost_Spr2.png").toExternalForm()),
             new Image(getClass().getResource("/Spr_Assets/Ghosts/Blinky/Red_Ghost_Spr3.png").toExternalForm())
         };
-        spriteView.setImage(frames[0]);
+        spriteView.setImage(frames[currentFrame]);
     }
 
     @Override

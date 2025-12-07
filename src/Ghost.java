@@ -175,13 +175,15 @@ public abstract class Ghost extends Character {
             return;
         }
 
-        frameTime += time;
+        frameTimer += time;
         if(frameTimer >= frameTime){
             frameTimer -= frameTime;
             currentFrame = (currentFrame + 1) % frames.length;
 
             spriteView.setImage(frames[currentFrame]);
+
         }
+
     }
 
 
