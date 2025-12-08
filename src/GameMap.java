@@ -2,9 +2,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import java.util.List;
 
 public class GameMap {
@@ -25,25 +23,25 @@ public class GameMap {
 
     private String[] tileMap = {
         "XXXXXXXXXXXXXXXXXXX",
-        "X s p p pXp p p s X",
-        "X XXpXXXpXpXXXpXX X",
-        "X p p p p p p p p X",
+        "XppppppppXppppppppX",
+        "XsXXpXXXpXpXXXpXXsX",
+        "XpppppppppppppppppX",
         "XpXXpXpXXXXXpXpXXpX",
-        "X p pXp p p pXp p X",
+        "XppppXpppppppXppppX",
         "XXXXpXXXX XXXXpXXXX",
         "OOOXpX       XpXOOO",
         "XXXXpX XX XX XpXXXX",
-        "O p p  X   X  p p O",
+        "O   p  X   X  p   O",
         "XXXXpX XXXXX XpXXXX",
         "OOOXpX       XpXOOO",
         "XXXXpX XXXXX XpXXXX",
-        "X p p p pXp p p p X",
+        "XppppppppXppppppppX",
         "XpXXpXXXpXpXXXpXXpX",
-        "X pX           Xp X",
-        "XXpX XpXXXXXpX XpXX",
-        "X p pXp pXp pXp p X",
-        "X XXXXXXpXpXXXXXX X",
-        "X s p p p p p p s X",
+        "XspXppppp pppppXpsX",
+        "XXpXpXpXXXXXpXpXpXX",
+        "XppppXpppXpppXppppX",
+        "XpXXXXXXpXpXXXXXXpX",
+        "XpppppppppppppppppX",
         "XXXXXXXXXXXXXXXXXXX"
     };
 
@@ -56,17 +54,17 @@ public class GameMap {
 
                 if (tile == 'X') {
                     Rectangle wall = new Rectangle(x, y, tileSize, tileSize);
-                    wall.setFill(Color.BLUE);
+                    wall.setFill(Color.TRANSPARENT);
                     walls.add(wall);
                     mapGroup.getChildren().add(wall);
                 }
                 else if (tile == 'p') {
-                    Pellet pellet = new Pellet(x, y);
-                    mapGroup.getChildren().add(pellet);
+                    Pellet pellet = new Pellet(x+16, y+16);
+                    mapGroup.getChildren().add(pellet.getView());
                 }
                 else if (tile == 's') {
-                    SpecialPickup specialPickup = new SpecialPickup(x, y);
-                    mapGroup.getChildren().add(specialPickup);
+                    SpecialPickup specialPickup = new SpecialPickup(x+16, y+16);
+                    mapGroup.getChildren().add(specialPickup.getView());
                 }
                 // foods could be added here as small rectangles/circles
             }

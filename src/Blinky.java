@@ -1,7 +1,5 @@
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.image.Image;
 //import map.GameMap;
 

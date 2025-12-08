@@ -7,8 +7,8 @@ public class PacView extends BorderPane {
 
     public PacView(int tileSize, int rowCount, int columnCount) {
         gameMap = new GameMap(tileSize, rowCount, columnCount);
-        root.getChildren().add(gameMap.getMapGroup());
         root.getChildren().add(gameMap.getMazeView());
+        root.getChildren().add(gameMap.getMapGroup());
     }
 
     public void addPacmanAndGhosts(PacMan pacman, GhostManager ghostManager) {
@@ -18,6 +18,10 @@ public class PacView extends BorderPane {
 
     public void renderMap() {
         gameMap.loadMap();
+    }
+
+    public void renderPellets(){
+
     }
 
     public Group getRoot() { return root; } // for Scene

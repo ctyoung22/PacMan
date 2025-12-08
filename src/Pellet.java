@@ -5,12 +5,10 @@ import javafx.scene.paint.Color;
 public class Pellet extends Pickup {
 
     public Pellet(double x, double y) {
-        super(x, y, 5, "Normal");
+        super(x, y, 4, "Normal");
 
-        Image pelletImage = new Image(getClass().getResource("/Spr_Assets/Pickups/Pellet_Spr.png").toExternalForm());
-        ImageView pelletView = new ImageView(pelletImage);
-        pelletView.setFitWidth(10);
-        pelletView.setFitHeight(10);
-
+        pickupImage = new Image(getClass().getResource("/Spr_Assets/Pickups/Pellet_Spr.png").toExternalForm());
+        pickupView.setImage(pickupImage);
+        updateImagePosition();
     }
 }

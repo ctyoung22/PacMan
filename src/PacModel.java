@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.Node;
 
 public class PacModel {
     private final int tileSize = 32;
@@ -45,4 +48,5 @@ public class PacModel {
     public int getColumnCount() {
         return columnCount;
     }
+
 }
