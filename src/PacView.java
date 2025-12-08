@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 
@@ -16,12 +18,12 @@ public class PacView extends BorderPane {
         root.getChildren().addAll(ghostManager.getGhostShapes());
     }
 
-    public void renderMap() {
-        gameMap.loadMap();
+    public void renderMap(PickupFactory pickups) {
+        gameMap.loadMap(pickups);
     }
 
-    public void renderPellets(){
-
+    public void removePickups(PickupFactory pickupFactory){
+        gameMap.removePickups(pickupFactory);
     }
 
     public Group getRoot() { return root; } // for Scene

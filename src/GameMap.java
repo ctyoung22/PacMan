@@ -3,6 +3,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
@@ -28,13 +30,13 @@ public class GameMap {
         "XpppppppppppppppppX",
         "XpXXpXpXXXXXpXpXXpX",
         "XppppXpppppppXppppX",
-        "XXXXpXXXX XXXXpXXXX",
-        "OOOXpX       XpXOOO",
-        "XXXXpX XX XX XpXXXX",
-        "O   p  X   X  p   O",
-        "XXXXpX XXXXX XpXXXX",
-        "OOOXpX       XpXOOO",
-        "XXXXpX XXXXX XpXXXX",
+        "XXXXpXXXXpXXXXpXXXX",
+        "OOOXpXpppppppXpXOOO",
+        "XXXXpXpXX XXpXpXXXX",
+        "O   pppX   Xppp   O",
+        "XXXXpXpXXXXXpXpXXXX",
+        "OOOXpXpppppppXpXOOO",
+        "XXXXpXpXXXXXpXpXXXX",
         "XppppppppXppppppppX",
         "XpXXpXXXpXpXXXpXXpX",
         "XspXppppp pppppXpsX",
@@ -45,7 +47,7 @@ public class GameMap {
         "XXXXXXXXXXXXXXXXXXX"
     };
 
-    public void loadMap() {
+    public void loadMap(PickupFactory pickups) {
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < columnCount; c++) {
                 char tile = tileMap[r].charAt(c);
@@ -59,14 +61,26 @@ public class GameMap {
                     mapGroup.getChildren().add(wall);
                 }
                 else if (tile == 'p') {
-                    Pellet pellet = new Pellet(x+16, y+16);
+                    Pickup pellet = new Pellet();
+                    //Pickup pellet = pickups.getPickup("Normal");
+                    pellet.placePickup(x+16, y+16);
                     mapGroup.getChildren().add(pellet.getView());
                 }
                 else if (tile == 's') {
-                    SpecialPickup specialPickup = new SpecialPickup(x+16, y+16);
+                    Pickup specialPickup = new SpecialPickup();
+                    //Pickup specialPickup = pickups.getPickup("Special");
+                    specialPickup.placePickup(x+16, y+16);
                     mapGroup.getChildren().add(specialPickup.getView());
                 }
                 // foods could be added here as small rectangles/circles
+            }
+        }
+    }
+
+    public void removePickups(PickupFactory pickupFactory) {
+        for(Pickup pickup : pickupFactory.getAllPickups()) {
+            if (pickup.isConsumed()) {
+                mapGroup.getChildren().remove(pickup.getView());
             }
         }
     }

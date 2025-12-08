@@ -9,7 +9,8 @@ public class PacController {
     public PacController(PacModel model, PacView view) {
         this.model = model;
         this.view = view;
-        view.renderMap();
+        model.setMap(view.getGameMap());
+        view.renderMap(model.getPickupFactory());
 
         view.addPacmanAndGhosts(model.getPacman(), model.getGhostManager());
     }
@@ -31,7 +32,8 @@ public class PacController {
                 double time = (now - lastTime) / 1_000_000_000.0; // nanoseconds to seconds
                 lastTime = now;
 
-                model.getPacman().move(view.getGameMap()); // update Pac
+                model.movePacman(view.getGameMap()); // update Pac position and check pickups
+                view.removePickups(model.getPickupFactory());
                 model.getPacman().updateAnimation(time);
                 model.getGhostManager().update(model.getPacman(), view.getGameMap(), time); // update Ghosts
             }

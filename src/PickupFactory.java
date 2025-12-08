@@ -1,8 +1,11 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PickupFactory {
     private Map<String, Pickup> pickupCache = new HashMap<>();
+    private ArrayList<Pickup> pickups = new ArrayList<>();
 
     public Pickup getPickup(String key) {
         if(pickupCache.containsKey(key)) {
@@ -11,10 +14,12 @@ public class PickupFactory {
             Pickup pickup = null;
             switch (key) {
                 case "Normal":
-                    pickup = new Pellet(0, 0);
+                    pickup = new Pellet();
+                    pickups.add(pickup);
                     break;
                 case "Special":
-                    pickup = new SpecialPickup(0, 0);
+                    pickup = new SpecialPickup();
+                    pickups.add(pickup);
                     break;
             }
             if (pickup != null) {
@@ -22,5 +27,9 @@ public class PickupFactory {
             }
             return pickup;
         }
+    }
+
+    public ArrayList<Pickup> getAllPickups() {
+        return pickups;
     }
 }
