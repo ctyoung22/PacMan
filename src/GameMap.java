@@ -2,6 +2,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import java.util.List;
@@ -24,25 +25,25 @@ public class GameMap {
 
     private String[] tileMap = {
         "XXXXXXXXXXXXXXXXXXX",
-        "X        X        X",
-        "X XX XXX X XXX XX X",
-        "X                 X",
-        "X XX X XXXXX X XX X",
-        "X    X       X    X",
-        "XXXX XXXX XXXX XXXX",
-        "OOOX X       X XOOO",
-        "XXXX X XX XX X XXXX",
-        "O      X   X      O",
-        "XXXX X XXXXX X XXXX",
-        "OOOX X       X XOOO",
-        "XXXX X XXXXX X XXXX",
-        "X        X        X",
-        "X XX XXX X XXX XX X",
-        "X  X           X  X",
-        "XX X X XXXXX X X XX",
-        "X    X   X   X    X",
-        "X XXXXXX X XXXXXX X",
-        "X                 X",
+        "X s p p pXp p p s X",
+        "X XXpXXXpXpXXXpXX X",
+        "X p p p p p p p p X",
+        "XpXXpXpXXXXXpXpXXpX",
+        "X p pXp p p pXp p X",
+        "XXXXpXXXX XXXXpXXXX",
+        "OOOXpX       XpXOOO",
+        "XXXXpX XX XX XpXXXX",
+        "O p p  X   X  p p O",
+        "XXXXpX XXXXX XpXXXX",
+        "OOOXpX       XpXOOO",
+        "XXXXpX XXXXX XpXXXX",
+        "X p p p pXp p p p X",
+        "XpXXpXXXpXpXXXpXXpX",
+        "X pX           Xp X",
+        "XXpX XpXXXXXpX XpXX",
+        "X p pXp pXp pXp p X",
+        "X XXXXXXpXpXXXXXX X",
+        "X s p p p p p p s X",
         "XXXXXXXXXXXXXXXXXXX"
     };
 
@@ -58,6 +59,14 @@ public class GameMap {
                     wall.setFill(Color.BLUE);
                     walls.add(wall);
                     mapGroup.getChildren().add(wall);
+                }
+                else if (tile == 'p') {
+                    Pellet pellet = new Pellet(x, y);
+                    mapGroup.getChildren().add(pellet);
+                }
+                else if (tile == 's') {
+                    SpecialPickup specialPickup = new SpecialPickup(x, y);
+                    mapGroup.getChildren().add(specialPickup);
                 }
                 // foods could be added here as small rectangles/circles
             }

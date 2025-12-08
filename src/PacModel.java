@@ -9,6 +9,9 @@ public class PacModel {
 
     private PacMan pacman;
     private GhostManager ghostManager;
+    private ArrayList<Pickup> pickups = new ArrayList<>();
+    private PickupFactory pickupFactory = new PickupFactory();
+    
     
     public PacModel() {
         pacman = new PacMan(9 * tileSize, 15 * tileSize, tileSize, boardWidth, boardHeight); // create Pac
