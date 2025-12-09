@@ -39,6 +39,9 @@ public class PacModel {
             if (!pickup.isConsumed() && pacman.getPacSprite().getBoundsInParent().intersects(pickup.getBoundsInParent())) {
                 pickup.consumePickup();
                 score.set(score.get() + pickup.getPointValue());
+                if(pickup instanceof SpecialPickup) {
+                    //TODO Make pacman a little faster and able to eat ghosts for a short time
+                }
             }
         }
     }
