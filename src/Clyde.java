@@ -2,9 +2,10 @@
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-//import map.GameMap;
 
 public class Clyde extends Ghost {
+
+    // Constructor
     public Clyde(int x, int y, int screenWidth, int screenHeight, int size) {
         super(x, y, size, screenWidth,  screenHeight,  Color.ORANGE);
         frames = new Image[]{
@@ -15,7 +16,7 @@ public class Clyde extends Ghost {
         spriteView.setImage(frames[currentFrame]);
     }
 
-    /* */
+    // AI behavior
     @Override
     public void updateAI(PacMan pacman, GameMap map) {
         // Clyde: chases Pac-Man until close, then scatters

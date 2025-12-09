@@ -1,9 +1,9 @@
-
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-//import map.GameMap;
 
 public class Pinky extends Ghost {
+
+    // Constructor
     public Pinky(int x, int y, int screenWidth, int screenHeight, int size) {
         super(x, y, size, screenWidth, screenHeight, Color.PINK);
         frames = new Image[]{
@@ -14,6 +14,7 @@ public class Pinky extends Ghost {
         spriteView.setImage(frames[currentFrame]);
     }
 
+    // AI behavior
     @Override
     public void updateAI(PacMan pacman, GameMap map) {
         // Pinky: targets 4 tiles ahead of Pac-Man

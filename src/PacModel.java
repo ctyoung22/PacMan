@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.Node;
 
 public class PacModel {
     private final int tileSize = 32;
@@ -18,21 +16,18 @@ public class PacModel {
     private GameMap map;
     private ArrayList<Pickup> pickups = new ArrayList<>();
     
-    
+    // Constructor
     public PacModel() {
         pacman = new PacMan(9 * tileSize, 15 * tileSize, tileSize, boardWidth, boardHeight); // create Pac
         ghostManager = new GhostManager(tileSize);
     }
 
+    // Set the game map
     public void setMap(GameMap map) {
         this.map = map;
     }
 
-    /* public void updatePosition() {
-        pacman.move(map);
-        ghostManager.updateGhosts(map, pacman);
-    } */
-
+    // Move Pacman and check for pickups
     public void movePacman(GameMap map) {
         pacman.move(map);
         for(Pickup pickup : pickups) {
@@ -46,6 +41,7 @@ public class PacModel {
         }
     }
 
+    // Getters
     public PacMan getPacman() {
         return pacman;
     }

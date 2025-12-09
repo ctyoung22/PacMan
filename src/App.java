@@ -1,11 +1,15 @@
+// PacMan FX
+// This program is a simple version of the classic Pac-Man game
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
+
+    // Start the JavaFX application
     @Override
     public void start(Stage stage) {
-        
         PacModel model = new PacModel();
         PacView view = new PacView(model.getTileSize(), model.getRowCount(), model.getColumnCount());
         PacController controller = new PacController(model, view);
@@ -18,6 +22,7 @@ public class App extends Application {
         controller.startGameLoop(scene);
     }
 
+    // Main method to launch the application
     public static void main(String[] args) {
         launch(args);
     }

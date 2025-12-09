@@ -5,6 +5,7 @@ public class Inky extends Ghost {
 
     Blinky blinky; // reference to Blinky
 
+    // Constructor
     public Inky(int x, int y, int screenWidth, int screenHeight,  int size) {
         super(x, y, size, screenWidth, screenHeight,  Color.CYAN);
         frames = new Image[]{
@@ -15,6 +16,7 @@ public class Inky extends Ghost {
         spriteView.setImage(frames[currentFrame]);
     }
 
+    // AI behavior
     @Override
     public void updateAI(PacMan pacman, GameMap map) {
         // Inky: complex targeting using "shadowing" Blinky 

@@ -16,6 +16,7 @@ public class GameMap {
     private List<Rectangle> walls = new java.util.ArrayList<>(); // list of wall rectangles
     private ImageView mazeView;
 
+    // Constructor
     public GameMap(int tileSize, int rowCount, int columnCount) {
         this.tileSize = tileSize;
         this.rowCount = rowCount;
@@ -47,6 +48,7 @@ public class GameMap {
         "XXXXXXXXXXXXXXXXXXX"
     };
 
+    // Load map from tileMap and create walls and pickups
     public void loadMap(ArrayList<Pickup> pickups) {
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < columnCount; c++) {
@@ -70,11 +72,11 @@ public class GameMap {
                     pickups.add(specialPickup);
                     mapGroup.getChildren().add(specialPickup.getView());
                 }
-                // foods could be added here as small rectangles/circles
             }
         }
     }
 
+    // Place a pickup on the map at specified coordinates
     public void placePickup(Pickup pickup, double x, double y) {
         pickup.setCenterX(x);
         pickup.setCenterY(y);
@@ -82,6 +84,7 @@ public class GameMap {
         mapGroup.getChildren().add(pickup.getView());
     }
 
+    // Remove consumed pickups from the map
     public void removePickups(ArrayList<Pickup> pickups) {
         for(Pickup pickup : pickups) {
             if (pickup.isConsumed()) {
@@ -90,6 +93,7 @@ public class GameMap {
         }
     }
 
+    // Create the maze image and set its properties
     public void createMapImage() {
         Image mazeImage = new Image(getClass().getResource("/Spr_Assets/Maze/Pacman_Map.png").toExternalForm());
         mazeView = new ImageView(mazeImage);
@@ -101,30 +105,7 @@ public class GameMap {
         mazeView.setPreserveRatio(true);
     }
 
-    /* public class CollisionBox {
-        public static boolean intersects(Shape a, Rectangle wall) {
-            return a.getBoundsInParent().intersects(wall.getBoundsInParent());
-        }
-    } */
-
-    /* public int getCornerX(String string) {
-        if (string.equals("LEFT")) {
-            return 0;
-        } else if (string.equals("RIGHT")) {
-            return (columnCount - 1) * tileSize;
-        }
-        return -1;
-    }
-
-    public int getCornerY(String string) {
-        if (string.equals("TOP")) {
-            return 0;
-        } else if (string.equals("BOTTOM")) {
-            return (rowCount - 1) * tileSize;
-        }
-        return -1;
-    } */
-
+    // Getters
     public Group getMapGroup() { return mapGroup; }
 
     public List<Rectangle> getWalls() { return walls; }    

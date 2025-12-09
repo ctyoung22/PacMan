@@ -7,6 +7,7 @@ public class PacController {
     private PacView view;
     private AnimationTimer gameLoop;
 
+    // Constructor
     public PacController(PacModel model, PacView view) {
         this.model = model;
         this.view = view;
@@ -43,6 +44,7 @@ public class PacController {
         gameLoop.start();
     }
 
+    // Track and update score in the view
     public void trackScore() {
         IntegerProperty scoreProperty = model.getScore();
         scoreProperty.addListener((ov)-> {

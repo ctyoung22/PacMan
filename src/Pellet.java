@@ -1,9 +1,8 @@
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class Pellet extends Pickup {
 
+    // Constructor
     public Pellet(double centerX, double centerY) {
         super(centerX, centerY, 4, 10);
 

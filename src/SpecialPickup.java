@@ -1,9 +1,8 @@
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class SpecialPickup extends Pickup {
 
+    // Constructor
     public SpecialPickup(double centerX, double centerY) {
         super(centerX, centerY, 7, 20);
 

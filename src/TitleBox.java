@@ -8,6 +8,7 @@ public class TitleBox extends HBox {
 
     Label scoreLabel;
 
+    // Constructor
     public TitleBox(int tileSize, int columnCount) {
         Image titleImage = new Image(getClass().getResource("/Spr_Assets/PacManFX_Title.png").toExternalForm());
         ImageView titleView = new ImageView(titleImage);
@@ -20,11 +21,15 @@ public class TitleBox extends HBox {
         setAlignment(Pos.CENTER);
     }
 
+    // Update the score display
+    public void updateScore(int score) {
+        scoreLabel.setText("Score: " + score);
+    }
+
+    // Getter
     public Label getScoreLabel() {
         return scoreLabel;
     }
 
-    public void updateScore(int score) {
-        scoreLabel.setText("Score: " + score);
-    }
+
 }
