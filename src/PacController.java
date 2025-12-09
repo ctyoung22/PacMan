@@ -28,6 +28,7 @@ public class PacController {
 
                 if(model.isGameOver()){
                     stop();
+                    view.addGameOverPane();
                     return;
                 }
                 if(lastTime == 0){

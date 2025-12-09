@@ -30,11 +30,6 @@ public class PacModel {
         ghostManager.initGhosts(map, tileSize);
     }
 
-    /* public void updatePosition() {
-        pacman.move(map);
-        ghostManager.updateGhosts(map, pacman);
-    } */
-
     public void movePacman(GameMap map) {
         if(gameOver){
             return; // nothing happens after game over
@@ -45,7 +40,6 @@ public class PacModel {
                 pickup.consumePickup();
                 score.set(score.get() + pickup.getPointValue());
                 if(pickup instanceof SpecialPickup) {
-                    //TODO Make pacman a little faster and able to eat ghosts for a short time
                     pacman.activatePowerForm(); // pacman gets faster and timer starts
 
                     //ghost go into frightened mode
