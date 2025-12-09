@@ -47,7 +47,7 @@ public class GameMap {
         "XXXXXXXXXXXXXXXXXXX"
     };
 
-    public void loadMap(PickupFactory pickups) {
+    public void loadMap(ArrayList<Pickup> pickups) {
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < columnCount; c++) {
                 char tile = tileMap[r].charAt(c);
@@ -61,15 +61,13 @@ public class GameMap {
                     mapGroup.getChildren().add(wall);
                 }
                 else if (tile == 'p') {
-                    Pickup pellet = new Pellet();
-                    //Pickup pellet = pickups.getPickup("Normal");
-                    pellet.placePickup(x+16, y+16);
+                    Pickup pellet = new Pellet(x+16, y+16);
+                    pickups.add(pellet);
                     mapGroup.getChildren().add(pellet.getView());
                 }
                 else if (tile == 's') {
-                    Pickup specialPickup = new SpecialPickup();
-                    //Pickup specialPickup = pickups.getPickup("Special");
-                    specialPickup.placePickup(x+16, y+16);
+                    Pickup specialPickup = new SpecialPickup(x+16, y+16);
+                    pickups.add(specialPickup);
                     mapGroup.getChildren().add(specialPickup.getView());
                 }
                 // foods could be added here as small rectangles/circles
@@ -77,8 +75,15 @@ public class GameMap {
         }
     }
 
-    public void removePickups(PickupFactory pickupFactory) {
-        for(Pickup pickup : pickupFactory.getAllPickups()) {
+    public void placePickup(Pickup pickup, double x, double y) {
+        pickup.setCenterX(x);
+        pickup.setCenterY(y);
+        pickup.updateImagePosition();
+        mapGroup.getChildren().add(pickup.getView());
+    }
+
+    public void removePickups(ArrayList<Pickup> pickups) {
+        for(Pickup pickup : pickups) {
             if (pickup.isConsumed()) {
                 mapGroup.getChildren().remove(pickup.getView());
             }

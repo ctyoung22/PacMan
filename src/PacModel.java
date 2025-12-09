@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 
 public class PacModel {
@@ -9,19 +11,17 @@ public class PacModel {
     private final int columnCount = 19;
     private final int boardWidth = columnCount * tileSize;
     private final int boardHeight = rowCount * tileSize;
-    private int score = 0;
+    private IntegerProperty score = new SimpleIntegerProperty(0);
 
     private PacMan pacman;
     private GhostManager ghostManager;
     private GameMap map;
     private ArrayList<Pickup> pickups = new ArrayList<>();
-    private PickupFactory pickupFactory = new PickupFactory();
     
     
     public PacModel() {
         pacman = new PacMan(9 * tileSize, 15 * tileSize, tileSize, boardWidth, boardHeight); // create Pac
         ghostManager = new GhostManager(tileSize);
-        setPickups();
     }
 
     public void setMap(GameMap map) {
@@ -38,22 +38,17 @@ public class PacModel {
         for(Pickup pickup : pickups) {
             if (!pickup.isConsumed() && pacman.getPacSprite().getBoundsInParent().intersects(pickup.getBoundsInParent())) {
                 pickup.consumePickup();
-                score += pickup.getPointValue();
-                System.out.println(score);
+                score.set(score.get() + pickup.getPointValue());
             }
         }
-    }
-
-    public void setPickups() {
-        this.pickups = pickupFactory.getAllPickups();
     }
 
     public PacMan getPacman() {
         return pacman;
     }
 
-    public PickupFactory getPickupFactory() {
-        return pickupFactory;
+    public ArrayList<Pickup> getPickups() {
+        return pickups;
     }
 
     public GhostManager getGhostManager() {
@@ -78,6 +73,10 @@ public class PacModel {
 
     public int getColumnCount() {
         return columnCount;
+    }
+
+    public IntegerProperty getScore() {
+        return score;
     }
 
 }

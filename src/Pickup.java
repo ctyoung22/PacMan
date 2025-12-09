@@ -3,38 +3,32 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public abstract class Pickup extends Circle implements IPickupFlyweight {
+public abstract class Pickup extends Circle{
     private boolean consumed;
-    private String type;
     private int pointValue;
+    private double x;
+    private double y;
     protected Image pickupImage;
     protected ImageView pickupView;
 
-    public Pickup(double radius, String type, int pointValue) {
-        super(radius);
+    public Pickup(double centerX, double centerY, double radius, int pointValue) {
+        super(centerX, centerY, radius);
+        setCenterX(centerX);
+        setCenterY(centerY);
         this.consumed = false;
-        this.type = type;
         this.pointValue = pointValue;
 
         pickupView = new ImageView();
         pickupView.setFitHeight(32);
         pickupView.setFitWidth(32);
 
-        //updateImagePosition();
+        updateImagePosition();
     }
 
     public boolean isConsumed() {
         return consumed;
     }
 
-    @Override
-    public void placePickup(double x, double y) {
-        setCenterX(x);
-        setCenterY(y);
-        updateImagePosition();
-    }
-
-    @Override
     public void consumePickup() {
         this.consumed = true;
     }
@@ -54,5 +48,13 @@ public abstract class Pickup extends Circle implements IPickupFlyweight {
 
     public int getPointValue() {
         return pointValue;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }
