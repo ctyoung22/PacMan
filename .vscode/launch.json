@@ -8,6 +8,14 @@
             "type": "java",
             "name": "App",
             "request": "launch",
+            "mainClass": "App",
+            "projectName": "PacMan_c8218cd1",
+            "vmArgs": "--module-path C:\\Users\\keena\\Downloads\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
             "vmArgs": "--module-path C:\\Users\\Conner\\OneDrive\\Documents\\Fall_2025\\F25_OOP\\Referenced_Libraries\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview",
             "mainClass": "App",
             "projectName": "PacMan_d84d5f49"
@@ -16,7 +24,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "vmArgs": "--module-path C:\\Users\\Conner\\OneDrive\\Documents\\Fall_2025\\F25_OOP\\Referenced_Libraries\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview",
+             "vmArgs": "--module-path C:\\Users\\keena\\Downloads\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview",
             "mainClass": "${file}"
         },
         {

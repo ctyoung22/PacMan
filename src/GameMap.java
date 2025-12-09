@@ -12,6 +12,13 @@ public class GameMap {
     private int rowCount = 0;
     private int columnCount = 0;
 
+    private int ghostSpawnX;
+    private int ghostSpawnY;
+
+    public int getGhostSpawnX() { return ghostSpawnX; }
+    public int getGhostSpawnY() { return ghostSpawnY; }
+
+
     private Group mapGroup = new Group();
     private List<Rectangle> walls = new java.util.ArrayList<>(); // list of wall rectangles
     private ImageView mazeView;
@@ -33,7 +40,7 @@ public class GameMap {
         "XXXXpXXXXpXXXXpXXXX",
         "OOOXpXpppppppXpXOOO",
         "XXXXpXpXX XXpXpXXXX",
-        "O   pppX   Xppp   O",
+        "O   pppX G Xppp   O",
         "XXXXpXpXXXXXpXpXXXX",
         "OOOXpXpppppppXpXOOO",
         "XXXXpXpXXXXXpXpXXXX",
@@ -69,6 +76,10 @@ public class GameMap {
                     Pickup specialPickup = new SpecialPickup(x+16, y+16);
                     pickups.add(specialPickup);
                     mapGroup.getChildren().add(specialPickup.getView());
+                }
+                else if ( tile == 'G'){
+                     ghostSpawnX = x;
+                     ghostSpawnY = y;
                 }
                 // foods could be added here as small rectangles/circles
             }

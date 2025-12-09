@@ -19,6 +19,9 @@ public abstract class Ghost extends Character {
     protected Mode currentMode = Mode.SCATTER; // starting mode
     protected long modeTimer = System.currentTimeMillis(); // timer for mode switching
 
+    protected int spawnX;
+    protected int spawnY; 
+
     // For Animation frames
     protected Image[] frames;
     protected int currentFrame = 0;
@@ -27,7 +30,7 @@ public abstract class Ghost extends Character {
     protected double frameTimer = 0.0;
     protected ImageView spriteView; // for rendering the sprite
 
-    public Ghost(int x, int y, int size, int screenWidth, int screenHeight, Color color) {
+    public Ghost(int x, int y, int size, int screenWidth, int screenHeight, Color color, int spawnX , int spawnY) {
         super(x, y, size, screenWidth, screenHeight);
         shape = new Circle(x + size / 2, y + size / 2, size / 2, color);
 
@@ -40,6 +43,35 @@ public abstract class Ghost extends Character {
         setVelocity(ghostSpeed, 0);
     }
 
+        public void setMode(Mode mode) {
+        this.currentMode = mode;
+        this.modeTimer = System.currentTimeMillis();
+    }
+
+    public Mode getMode() {
+        return currentMode;
+    }
+
+    public void setSpawn(int x, int y) {
+        this.spawnX = x;
+        this.spawnY = y;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+
+        // update hitbox
+        updateShape(getShape());
+
+        // update sprite
+        spriteView.setX(x);
+        spriteView.setY(y);
+    }
+
+
+
+
     // get the shape for rendering
     @Override
     public Circle getShape() {
@@ -47,7 +79,33 @@ public abstract class Ghost extends Character {
     }
 
     // Each ghost will override this with its own AI
-    public abstract void updateAI(PacMan pacman, GameMap map);
+    public  void updateAI(PacMan pacman, GameMap map){
+        switch (currentMode) {
+            case CHASE:
+                chaseAI(pacman, map); // ghost-specific targeting
+                break;
+            case SCATTER:
+                moveRandom(map); // ghost-specific scatter targeting
+                break;
+            case FRIGHTENED:
+                moveRandom(map); // wander randomly
+                break;
+            case EYES:
+                moveToward(spawnX, spawnY, map); // return to ghost house
+                if (x == spawnX && y == spawnY) {
+                    released = false; // ghosts are back in house
+                    setMode(Mode.CHASE); // revive once back
+                }
+                break;
+        }
+
+    }
+
+    // each ghost will overide with individual ai 
+    public abstract void chaseAI(PacMan pacman, GameMap map);
+   
+
+
 
     public void setVelocity(int vx, int vy) {
         this.velocityX = vx;
@@ -55,14 +113,14 @@ public abstract class Ghost extends Character {
     }
 
     protected void updateMode() { // switch between SCATTER and CHASE modes
-        long elapsed = System.currentTimeMillis() - modeTimer;
-        if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
-            currentMode = Mode.CHASE;
-            modeTimer = System.currentTimeMillis();
-        } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
-            currentMode = Mode.SCATTER;
-            modeTimer = System.currentTimeMillis();
-        }
+            long elapsed = System.currentTimeMillis() - modeTimer;
+            if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
+                currentMode = Mode.CHASE;
+                modeTimer = System.currentTimeMillis();
+            } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
+                currentMode = Mode.SCATTER;
+                modeTimer = System.currentTimeMillis();
+            }
     }
 
     // standard movement with collision detection

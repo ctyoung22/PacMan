@@ -13,11 +13,16 @@ public class GameConstants {
     // Character speeds
     public static final int GHOST_SPEED = 1;
     public static final int PACMAN_SPEED = 1;
+    public static final int PACMAN_SUPERSPEED = 2;
+
+
 
     // Timing constants
     public static final int GHOST_AI_DELAY = 300; // milliseconds
     public static final int GHOST_SCATTER_TIME = 2000; // milliseconds
     public static final int GHOST_CHASE_TIME = 20000; // milliseconds
+    public static final int POWER_DURATION = 7000; // milliseconds
+    public static final int FRIGHTENED_DURATION = 6000; //milliseconds
 
     //tunnel 
     public static final int TUNNEL_ROW = 9;

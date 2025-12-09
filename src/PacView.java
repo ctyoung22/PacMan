@@ -10,11 +10,12 @@ import javafx.scene.layout.HBox;
 public class PacView extends BorderPane {
     private Group root = new Group();
     private GameMap gameMap;
+    private PacModel model;
     private TitleBox titleBox;
     private ScoreBox scoreBox = new ScoreBox();
 
     public PacView(int tileSize, int rowCount, int columnCount) {
-        gameMap = new GameMap(tileSize, rowCount, columnCount);
+        this.gameMap = new GameMap(tileSize, rowCount, columnCount);
         root.getChildren().add(gameMap.getMazeView());
         root.getChildren().add(gameMap.getMapGroup());
 
@@ -32,6 +33,7 @@ public class PacView extends BorderPane {
 
     public void renderMap(ArrayList<Pickup> pickups) {
         gameMap.loadMap(pickups);
+        
     }
 
     public void removePickups(ArrayList<Pickup> pickups){

@@ -21,6 +21,12 @@ public class PacMan extends Character {
     private double frameTime = 0.08;
     private double frameTimer = 0.0;
 
+    private PacModel model;
+
+    private boolean poweredUp = false;
+    private long timer = 0; 
+    private int superSpeed = GameConstants.PACMAN_SUPERSPEED; // hes faster 
+    private int powerTimer = GameConstants.POWER_DURATION;
 
 
     public PacMan(int x, int y, int size, int screenWidth, int screenHeight) {
@@ -121,7 +127,10 @@ public class PacMan extends Character {
                 velocityX = testVX;
                 velocityY = testVY;
                 nextDirection = ' '; // clear queued direction
+
+                updatePowerMode(); // check if power mode has expired 
             }
+            
         }
 
         int newX = x + velocityX; // calculate next position in the x direction
@@ -139,6 +148,29 @@ public class PacMan extends Character {
         pacSprite.setY(y);
     }
 
+    public void setSpeed( int speed){
+        this.speed = speed;
+    }
+
+    public int getSpeed(){
+        return speed;
+    }
+
+    public void activatePowerForm(){
+        setSpeed(superSpeed); //slightly faster
+        timer = System.currentTimeMillis();
+    }
+
+    public void updatePowerMode(){
+        if(isPoweredUp() && System.currentTimeMillis() - timer > powerTimer){
+            setSpeed(GameConstants.PACMAN_SPEED); // goes back to normal after time limit reached 
+        }
+    }
+
+    public boolean isPoweredUp(){
+        return speed > GameConstants.PACMAN_SPEED;
+    }
+
     @Override
     public Circle getShape() {
         return shape;
@@ -148,7 +180,7 @@ public class PacMan extends Character {
         return pacSprite;
     }
 
-    public void updateAnimation(double time){
+    public void updateAnimation(double time){ 
         if (currentDirectionFrames == null || currentDirectionFrames.length == 0){
             return;
         }
@@ -163,5 +195,30 @@ public class PacMan extends Character {
         }
 
     }
+
+    private int lives = 3;
+
+    public void loseLife() {
+        lives--;
+        if (lives <= 0) {
+            System.out.println("Game Over!");
+            // trigger game over state
+        } else {
+            System.out.println("Lives remaining: " + lives);
+        }
+    }
+
+    public int getLives(){
+        return lives;
+    }
+
+    public void resetPosition() {
+        this.x = 9 * size; // starting tile
+        this.y = 15 * size;
+        pacSprite.setX(x);
+        pacSprite.setY(y);
+        updateShape(getShape());
+    }
+
 
 }

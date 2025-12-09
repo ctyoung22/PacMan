@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 //import map.GameMap;
 
 public class Clyde extends Ghost {
-    public Clyde(int x, int y, int screenWidth, int screenHeight, int size) {
-        super(x, y, size, screenWidth,  screenHeight,  Color.ORANGE);
+    public Clyde(int x, int y, int screenWidth, int screenHeight, int size, int spawnX , int spawnY) {
+        super(x, y, size, screenWidth,  screenHeight,  Color.ORANGE, spawnX , spawnY);
         frames = new Image[]{
             new Image(getClass().getResource("/Spr_Assets/Ghosts/Clyde/Orange_Ghost_Spr1.png").toExternalForm()),
             new Image(getClass().getResource("/Spr_Assets/Ghosts/Clyde/Orange_Ghost_Spr2.png").toExternalForm()),
@@ -15,13 +15,10 @@ public class Clyde extends Ghost {
         spriteView.setImage(frames[currentFrame]);
     }
 
-    /* */
-    @Override
-    public void updateAI(PacMan pacman, GameMap map) {
-        // Clyde: chases Pac-Man until close, then scatters
-        updateMode();
 
-        if (currentMode == Mode.CHASE) {
+
+    @Override
+    public void chaseAI(PacMan pacman, GameMap map) {
             int dx = pacman.getX() - this.getX();
             int dy = pacman.getY() - this.getY();
             double distance = Math.abs(dx) + Math.abs(dy);
@@ -39,19 +36,9 @@ public class Clyde extends Ghost {
                     moveRandom(map);
                 }
             }
-        } else if (currentMode == Mode.SCATTER) {
-            int dx = this.getX() - pacman.getX();
-            int dy = this.getY() - pacman.getY();
-            int targetX = this.getX() + dx * 3;
-            int targetY = this.getY() + dy * 3;
-
-            if (!isBlocked(targetX, targetY, map)) {
-                moveToward(targetX, targetY, map);
-            } else {
-                moveRandom(map);
-            }
-        }
     }
+
+
 
 
     

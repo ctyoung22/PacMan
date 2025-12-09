@@ -25,6 +25,11 @@ public class PacController {
 
             @Override
             public void handle(long now) { // called every frame
+
+                if(model.isGameOver()){
+                    stop();
+                    return;
+                }
                 if(lastTime == 0){
                     lastTime = now;
                     return;
