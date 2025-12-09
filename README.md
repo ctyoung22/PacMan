@@ -20,3 +20,4 @@ The folders of main significance are:
 
 - Ghosts can sometimes stack on top of each other
 - Ghosts typically remain still if the player remains still
+- Ghosts do not return to start when eaten as intended
