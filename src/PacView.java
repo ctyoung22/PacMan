@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 public class PacView extends BorderPane {
     private Group root = new Group();
@@ -38,6 +39,17 @@ public class PacView extends BorderPane {
 
     public void removePickups(ArrayList<Pickup> pickups){
         gameMap.removePickups(pickups);
+    }
+
+    // adds the game over text when the fail state is reached
+    public void addGameOverPane() {
+        StackPane gameOverPane = new StackPane();
+        gameOverPane.setPrefSize(100, 100);
+        Label gameOverLabel = new Label("Game Over");
+        gameOverLabel.setStyle("-fx-font-size: 48px; -fx-text-fill: red;");
+        gameOverPane.getChildren().add(gameOverLabel);
+        setCenter(gameOverPane);
+        gameOverPane.toFront();
     }
 
     public Group getRoot() { return root; } // for Scene
