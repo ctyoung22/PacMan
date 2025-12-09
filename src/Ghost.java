@@ -22,6 +22,8 @@ public abstract class Ghost extends Character {
     protected int spawnX;
     protected int spawnY; 
 
+    
+
     // For Animation frames
     protected Image[] frames;
     protected int currentFrame = 0;
@@ -85,7 +87,7 @@ public abstract class Ghost extends Character {
                 chaseAI(pacman, map); // ghost-specific targeting
                 break;
             case SCATTER:
-                moveRandom(map); // ghost-specific scatter targeting
+                scatterAI(pacman, map); // ghost-specific scatter targeting
                 break;
             case FRIGHTENED:
                 moveRandom(map); // wander randomly
@@ -103,7 +105,7 @@ public abstract class Ghost extends Character {
 
     // each ghost will overide with individual ai 
     public abstract void chaseAI(PacMan pacman, GameMap map);
-   
+    public abstract void scatterAI(PacMan pacman, GameMap map);
 
 
 
@@ -257,7 +259,13 @@ public abstract class Ghost extends Character {
     public boolean released = false; // has the ghost been released from the ghost house
 
     public void release() { // release the ghost
-        released = true;
+    released = true;
+    currentMode = Mode.CHASE; // or CHASE depending on cycle
+    // give them a default direction so they move right away
+    velocityX = GameConstants.GHOST_SPEED;
+    velocityY = 0;
+
+
     }
 
     public boolean isReleased() { // check if ghost is released

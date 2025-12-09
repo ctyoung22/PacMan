@@ -66,7 +66,21 @@ public class Blinky extends Ghost {
         moveToward(pacman.getX(), pacman.getY(), map);
     }
 
+    @Override
+    public void scatterAI(PacMan pacman, GameMap map) {
+                // Scatter: move away from Pac-Man (simple version)
+                int dx = this.getX() - pacman.getX();
+                int dy = this.getY() - pacman.getY();
+                int targetX = this.getX() + dx * 3;
+                int targetY = this.getY() + dy * 3;
 
+                if (!isBlocked(targetX, targetY, map)) {
+                    moveToward(targetX, targetY, map);
+                } else {
+                    moveRandom(map);
+              
+                  }
+    }
 
 
     }
