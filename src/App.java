@@ -14,7 +14,6 @@ public class App extends Application {
         PacView view = new PacView(model.getTileSize(), model.getRowCount(), model.getColumnCount());
         PacController controller = new PacController(model, view);
         Scene scene = new Scene(view, model.getBoardWidth(), model.getBoardHeight() + 235);
-        System.out.println("boardWidth=" + model.getBoardWidth() + " boardHeight=" + model.getBoardHeight());
         stage.setScene(scene);
         stage.setTitle("Pac-Man FX");
         stage.setResizable(false);
