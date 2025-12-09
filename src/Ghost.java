@@ -20,9 +20,7 @@ public abstract class Ghost extends Character {
     protected long modeTimer = System.currentTimeMillis(); // timer for mode switching
 
     protected int spawnX;
-    protected int spawnY; 
-
-    
+    protected int spawnY;
 
     // For Animation frames
     protected Image[] frames;
@@ -32,7 +30,7 @@ public abstract class Ghost extends Character {
     protected double frameTimer = 0.0;
     protected ImageView spriteView; // for rendering the sprite
 
-    public Ghost(int x, int y, int size, int screenWidth, int screenHeight, Color color, int spawnX , int spawnY) {
+    public Ghost(int x, int y, int size, int screenWidth, int screenHeight, Color color, int spawnX, int spawnY) {
         super(x, y, size, screenWidth, screenHeight);
         shape = new Circle(x + size / 2, y + size / 2, size / 2, color);
 
@@ -45,7 +43,7 @@ public abstract class Ghost extends Character {
         setVelocity(ghostSpeed, 0);
     }
 
-        public void setMode(Mode mode) {
+    public void setMode(Mode mode) {
         this.currentMode = mode;
         this.modeTimer = System.currentTimeMillis();
     }
@@ -71,9 +69,6 @@ public abstract class Ghost extends Character {
         spriteView.setY(y);
     }
 
-
-
-
     // get the shape for rendering
     @Override
     public Circle getShape() {
@@ -81,7 +76,7 @@ public abstract class Ghost extends Character {
     }
 
     // Each ghost will override this with its own AI
-    public  void updateAI(PacMan pacman, GameMap map){
+    public void updateAI(PacMan pacman, GameMap map) {
         switch (currentMode) {
             case CHASE:
                 chaseAI(pacman, map); // ghost-specific targeting
@@ -103,11 +98,10 @@ public abstract class Ghost extends Character {
 
     }
 
-    // each ghost will overide with individual ai 
+    // each ghost will overide with individual ai
     public abstract void chaseAI(PacMan pacman, GameMap map);
+
     public abstract void scatterAI(PacMan pacman, GameMap map);
-
-
 
     public void setVelocity(int vx, int vy) {
         this.velocityX = vx;
@@ -115,14 +109,14 @@ public abstract class Ghost extends Character {
     }
 
     protected void updateMode() { // switch between SCATTER and CHASE modes
-            long elapsed = System.currentTimeMillis() - modeTimer;
-            if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
-                currentMode = Mode.CHASE;
-                modeTimer = System.currentTimeMillis();
-            } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
-                currentMode = Mode.SCATTER;
-                modeTimer = System.currentTimeMillis();
-            }
+        long elapsed = System.currentTimeMillis() - modeTimer;
+        if (currentMode == Mode.SCATTER && elapsed > GameConstants.GHOST_SCATTER_TIME) { // 7 seconds scatter
+            currentMode = Mode.CHASE;
+            modeTimer = System.currentTimeMillis();
+        } else if (currentMode == Mode.CHASE && elapsed > GameConstants.GHOST_CHASE_TIME) { // 20 seconds chase
+            currentMode = Mode.SCATTER;
+            modeTimer = System.currentTimeMillis();
+        }
     }
 
     // standard movement with collision detection
@@ -259,13 +253,8 @@ public abstract class Ghost extends Character {
     public boolean released = false; // has the ghost been released from the ghost house
 
     public void release() { // release the ghost
-    released = true;
-    currentMode = Mode.CHASE; // or CHASE depending on cycle
-    // give them a default direction so they move right away
-    velocityX = GameConstants.GHOST_SPEED;
-    velocityY = 0;
-
-
+        released = true;
+        currentMode = Mode.CHASE; // or CHASE depending on cycle
     }
 
     public boolean isReleased() { // check if ghost is released

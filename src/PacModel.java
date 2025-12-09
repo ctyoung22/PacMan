@@ -17,6 +17,7 @@ public class PacModel {
     private GhostManager ghostManager;
     private GameMap map;
     private ArrayList<Pickup> pickups = new ArrayList<>();
+    private int ghostSpeed = GameConstants.GHOST_SPEED;
 
     
     
@@ -52,8 +53,13 @@ public class PacModel {
         for (Ghost g : ghostManager.getGhosts()) {
             if (pacman.getPacSprite().getBoundsInParent().intersects(g.getSprite().getBoundsInParent())) {
                 if (g.getMode() == Ghost.Mode.FRIGHTENED) {
-                    // Pac-Man eats ghost → ghost becomes eyes
-                    g.setMode(Ghost.Mode.EYES);
+                     // Pac-Man eats ghost → instantly respawn
+                    g.setPosition(map.getGhostSpawnX(), map.getGhostSpawnY());
+                    g.setMode(Ghost.Mode.SCATTER); // restart normal cycle
+
+                    g.release();
+                    g.setVelocity(ghostSpeed, 0);
+
                     score.set(score.get() + 200); // award points (scale up if multiple ghosts eaten)
                     System.out.println("Ghost eaten! Switching to EYES mode.");
                 } else if (g.getMode() == Ghost.Mode.CHASE || g.getMode() == Ghost.Mode.SCATTER) {

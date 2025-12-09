@@ -52,17 +52,7 @@ public class GhostManager {
     startTime = System.currentTimeMillis();
 
     }
-    /*  for testing all the methods ghost movement 
-    // Update all ghosts
-    public void update(PacMan pacman, GameMap map, double time) {
-        for (Ghost g : ghosts) {
-            //g.updateAI(pacman, map);
-            g.moveRandom(map);
-            g.updateAnimation(time);
-            //g.move(map);
-        }
-    }
-        */
+
 
     
     public void update(PacMan pacman, GameMap map, double time) {
