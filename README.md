@@ -1,18 +1,21 @@
-## Getting Started
+## Welcome
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Welcome to PacMan FX, created by Keenan Johnson, Josh Weeks, and Conner Young. 
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+The folders of main significance are:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `src`: the folder which contains the source code and art assets
+- `lib`: the folder to maintain JavaFX dependencies
+- `bin`: the folder in which compiled output files are generated
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Design Choices
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- The map of the game is created on a 2D matrix, in which each cell represents a wall or open space with or without a pickup.
+- Polymorphism is used in the model ArrayList pickups, which contains two different subtypes of pickup
 
-## Dependency Management
+## Known Bugs
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- Ghosts can sometimes stack on top of each other
+- Ghosts typically remain still if the player remains still
