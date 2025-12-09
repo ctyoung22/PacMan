@@ -13,6 +13,7 @@ The folders of main significance are:
 ## Design Choices
 
 - The map of the game is created on a 2D matrix, in which each cell represents a wall or open space with or without a pickup
+- PacMan movement is queue-based
 - Polymorphism is used in the model ArrayList pickups, which contains two different subtypes of pickup
 
 ## Known Bugs
