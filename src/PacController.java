@@ -1,4 +1,5 @@
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.Scene;
 
 public class PacController {
@@ -6,10 +7,12 @@ public class PacController {
     private PacView view;
     private AnimationTimer gameLoop;
 
+    // Constructor
     public PacController(PacModel model, PacView view) {
         this.model = model;
         this.view = view;
-        view.renderMap();
+        model.setMap(view.getGameMap());
+        view.renderMap(model.getPickups());
 
         view.addPacmanAndGhosts(model.getPacman(), model.getGhostManager());
     }
@@ -31,12 +34,22 @@ public class PacController {
                 double time = (now - lastTime) / 1_000_000_000.0; // nanoseconds to seconds
                 lastTime = now;
 
-                model.getPacman().move(view.getGameMap()); // update Pac
+                model.movePacman(view.getGameMap()); // update Pac position and check pickups
+                view.removePickups(model.getPickups());
+                trackScore();
                 model.getPacman().updateAnimation(time);
                 model.getGhostManager().update(model.getPacman(), view.getGameMap(), time); // update Ghosts
             }
         };
         gameLoop.start();
+    }
+
+    // Track and update score in the view
+    public void trackScore() {
+        IntegerProperty scoreProperty = model.getScore();
+        scoreProperty.addListener((ov)-> {
+            view.getScoreBox().updateScore(scoreProperty.getValue());
+        } );
     }
 }
 

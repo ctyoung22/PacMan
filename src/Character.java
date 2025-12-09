@@ -1,4 +1,3 @@
-import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -10,6 +9,7 @@ public abstract class Character {
     protected int screenWidth; //  screen width
     protected int screenHeight; // screen height
 
+    // Constructor
     public Character(int x, int y, int size, int screenWidth, int screenHeight) {
         this.x = x;
         this.y = y;
@@ -18,13 +18,16 @@ public abstract class Character {
         this.screenWidth = screenWidth;
     }
 
+    // Getter
     public abstract Shape getShape();
 
+    // Movement with collision detection
     public void move(GameMap map) {
         x += velocityX;
         y += velocityY;
     }
 
+    // Check for wall collisions
     protected boolean isBlocked(int nextX, int nextY, GameMap map) {  // check for wall collisions
         Circle testShape = new Circle(nextX + size/2, nextY + size/2, size/2); // test shape
         for (Rectangle wall : map.getWalls()) {
@@ -35,6 +38,7 @@ public abstract class Character {
         return false;
     }
 
+    // Apply tunnel wrap-around
     protected void applyTunnelWrap(int tunnelRowY) {
         if (y >= tunnelRowY && y < tunnelRowY + size) {
             if (x < 0) {
@@ -45,11 +49,13 @@ public abstract class Character {
         }
     }
 
+    // Update shape position
     protected void updateShape(Circle shape) {
         shape.setCenterX(x + size/2);
         shape.setCenterY(y + size/2);
     }
 
+    // Get possible movement directions
     protected int[][] getDirections(int step) {
         return new int[][] {
             { step, 0 }, { -step, 0 },
@@ -57,16 +63,12 @@ public abstract class Character {
         };
     }
 
-
-
-
+    // Getters
     public int getX() { return x; }
     public int getY() { return y; }
     public int getVelocityX() { return velocityX; }
     public int getVelocityY() { return velocityY; }
     public int getSize() { return size; }
-
-
 }
 
 

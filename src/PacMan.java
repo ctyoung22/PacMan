@@ -22,7 +22,7 @@ public class PacMan extends Character {
     private double frameTimer = 0.0;
 
 
-
+    // Constructor
     public PacMan(int x, int y, int size, int screenWidth, int screenHeight) {
         super(x, y, size, screenWidth, screenHeight);
         shape = new Circle(x + size / 2, y + size / 2, size / 2, Color.YELLOW); // create Pac hit box
@@ -71,6 +71,7 @@ public class PacMan extends Character {
         pacSprite.setImage(currentDirectionFrames[0]);
     }
 
+    // Handle keyboard input for direction changes
     public void handleInput(KeyCode code) { // queue direction change
         if (code == KeyCode.UP) { // up arrow key
             nextDirection = 'U';
@@ -83,6 +84,7 @@ public class PacMan extends Character {
         }
     }
 
+    // Move PacMan with collision detection
     @Override
     public void move(GameMap map) { // movement with collision detection
         if (nextDirection != ' ') { // if a direction change is queued
@@ -139,15 +141,7 @@ public class PacMan extends Character {
         pacSprite.setY(y);
     }
 
-    @Override
-    public Circle getShape() {
-        return shape;
-    }
-
-    public ImageView getPacSprite(){
-        return pacSprite;
-    }
-
+    // Update PacMan animation frames
     public void updateAnimation(double time){
         if (currentDirectionFrames == null || currentDirectionFrames.length == 0){
             return;
@@ -159,9 +153,19 @@ public class PacMan extends Character {
             currentFrame = (currentFrame + 1) % currentDirectionFrames.length;
 
             pacSprite.setImage(currentDirectionFrames[currentFrame]);
-
         }
-
     }
+
+    // Getters
+    @Override
+    public Circle getShape() {
+        return shape;
+    }
+
+    public ImageView getPacSprite(){
+        return pacSprite;
+    }
+
+
 
 }

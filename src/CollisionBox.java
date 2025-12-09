@@ -20,6 +20,4 @@ public class CollisionBox {
                circleTop < wallBottom && // vertical overlap
                circleBottom > wallTop; // vertical overlap  
     }
-
-
 }

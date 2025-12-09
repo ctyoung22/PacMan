@@ -1,7 +1,5 @@
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.image.Image;
 //import map.GameMap;
 
@@ -9,6 +7,7 @@ public class Blinky extends Ghost {
     // PacMan pacman;
     GameMap map;
 
+    // Constructor
     public Blinky(int x, int y, int screenWidth, int screenHeight, int size) {
         super(x, y, size, screenWidth, screenHeight, Color.RED);
         
@@ -20,6 +19,7 @@ public class Blinky extends Ghost {
         spriteView.setImage(frames[currentFrame]);
     }
 
+    // AI behavior
     @Override
     public void updateAI(PacMan pacman, GameMap map) {
         // Blinky: directly chases Pac-Man

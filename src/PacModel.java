@@ -1,22 +1,53 @@
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class PacModel {
     private final int tileSize = 32;
     private final int rowCount = 21;
     private final int columnCount = 19;
     private final int boardWidth = columnCount * tileSize;
     private final int boardHeight = rowCount * tileSize;
+    private IntegerProperty score = new SimpleIntegerProperty(0);
 
     private PacMan pacman;
     private GhostManager ghostManager;
+    private GameMap map;
+    private ArrayList<Pickup> pickups = new ArrayList<>();
     
+    // Constructor
     public PacModel() {
         pacman = new PacMan(9 * tileSize, 15 * tileSize, tileSize, boardWidth, boardHeight); // create Pac
         ghostManager = new GhostManager(tileSize);
     }
 
+    // Set the game map
+    public void setMap(GameMap map) {
+        this.map = map;
+    }
+
+    // Move Pacman and check for pickups
+    public void movePacman(GameMap map) {
+        pacman.move(map);
+        for(Pickup pickup : pickups) {
+            if (!pickup.isConsumed() && pacman.getPacSprite().getBoundsInParent().intersects(pickup.getBoundsInParent())) {
+                pickup.consumePickup();
+                score.set(score.get() + pickup.getPointValue());
+                if(pickup instanceof SpecialPickup) {
+                    //TODO Make pacman a little faster and able to eat ghosts for a short time
+                }
+            }
+        }
+    }
+
+    // Getters
     public PacMan getPacman() {
         return pacman;
+    }
+
+    public ArrayList<Pickup> getPickups() {
+        return pickups;
     }
 
     public GhostManager getGhostManager() {
@@ -42,4 +73,9 @@ public class PacModel {
     public int getColumnCount() {
         return columnCount;
     }
+
+    public IntegerProperty getScore() {
+        return score;
+    }
+
 }
